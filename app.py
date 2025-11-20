@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, session
+import dotenv
 import json, os
 from datetime import date
 
+dotenv.load_dotenv()
 app = Flask(__name__)
 app.secret_key = "HelloFaraday"
 
-ADMIN_PASSWORD = "faraday"
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 
 DAILY_FILE = "./data/daily.json"
 HISTORY_FILE = "./data/history.json"
