@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Faraday – Tarefas do Dia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      :root {
+        --primary-dark: #000000;
+        --secondary-dark: #433455;
+        --accent-purple: #8b5580;
+        --accent-purple-light: #a593a5;
+        --accent-blue: #416aa3;
+        --accent-blue-light: #7ca1c0;
+        --accent-green: #6eaa78;
+        --accent-teal: #68aca9;
+        --neutral-gray: #6f6776;
+        --neutral-gray-light: #9a9a97;
+        --neutral-beige: #c5ccb8;
+        --accent-burgundy: #9a4f50;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--primary-dark) 100%);
+        color: var(--neutral-beige);
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 15px;
+        font-size: 16px;
+      }
+      
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(67, 52, 85, 0.95);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid var(--accent-purple);
+      }
+      
+      h1 {
+        color: var(--accent-teal);
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: clamp(1.8em, 5vw, 2.5em);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        border-bottom: 2px solid var(--accent-teal);
+        padding-bottom: 10px;
+      }
+      
+      form {
+        background: rgba(106, 96, 146, 0.3);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        border: 1px solid var(--accent-purple-light);
+      }
+      
+      input[type="text"] {
+        width: 100%;
+        padding: clamp(12px, 3vw, 15px);
+        margin-bottom: 15px;
+        background: rgba(197, 204, 184, 0.1);
+        border: 2px solid var(--neutral-gray);
+        border-radius: 8px;
+        color: var(--neutral-beige);
+        font-size: clamp(14px, 4vw, 16px);
+        transition: all 0.3s ease;
+      }
+      
+      input[type="text"]:focus {
+        outline: none;
+        border-color: var(--accent-teal);
+        background: rgba(197, 204, 184, 0.15);
+        box-shadow: 0 0 10px rgba(104, 172, 169, 0.3);
+      }
+      
+      input::placeholder {
+        color: var(--neutral-gray-light);
+        font-size: clamp(14px, 4vw, 16px);
+      }
+      
+      button {
+        background: linear-gradient(135deg, var(--accent-teal) 0%, #387080 100%);
+        color: white;
+        border: none;
+        padding: clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px);
+        border-radius: 8px;
+        font-size: clamp(14px, 4vw, 16px);
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        width: 100%;
+      }
+      
+      button:hover {
+        background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-teal) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(110, 170, 120, 0.4);
+      }
+      
+      ul {
+        list-style: none;
+        margin: 25px 0;
+      }
+      
+      li {
+        background: rgba(111, 103, 118, 0.3);
+        margin: 10px 0;
+        padding: clamp(12px, 3vw, 18px) clamp(15px, 4vw, 20px);
+        border-radius: 8px;
+        border-left: 4px solid var(--accent-blue);
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      
+      li:hover {
+        background: rgba(111, 103, 118, 0.5);
+        transform: translateX(5px);
+      }
+      
+      .completed {
+        border-left-color: var(--accent-green);
+        background: rgba(110, 170, 120, 0.2);
+      }
+      
+      .completed span {
+        color: var(--accent-green) !important;
+      }
+      
+      .task-content {
+        flex: 1;
+        min-width: 200px;
+        color: var(--neutral-beige);
+        font-size: clamp(14px, 4vw, 16px);
+      }
+      
+      .nav-links {
+        text-align: center;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid var(--accent-purple-light);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      
+      .nav-links a {
+        color: var(--accent-blue-light);
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        padding: clamp(10px, 2.5vw, 12px) clamp(15px, 4vw, 25px);
+        border-radius: 8px;
+        background: rgba(65, 106, 163, 0.3);
+        border: 1px solid var(--accent-blue);
+        display: inline-block;
+        flex: 1;
+        min-width: 120px;
+        max-width: 200px;
+        text-align: center;
+        font-size: clamp(13px, 3.5vw, 15px);
+      }
+      
+      .nav-links a:hover {
+        color: var(--accent-teal);
+        background: rgba(65, 106, 163, 0.5);
+        transform: translateY(-2px);
+      }
+      
+      .task-link {
+        background: linear-gradient(135deg, var(--accent-burgundy) 0%, #8d6268 100%);
+        color: white;
+        padding: clamp(6px, 2vw, 8px) clamp(12px, 3vw, 16px);
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: clamp(12px, 3vw, 14px);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+      
+      .task-link:hover {
+        background: linear-gradient(135deg, #8d6268 0%, var(--accent-burgundy) 100%);
+        transform: translateY(-2px);
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      li {
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      /* Tablet */
+      @media (max-width: 768px) {
+        body {
+          padding: 12px;
+        }
+        
+        .container {
+          padding: 20px;
+          border-radius: 12px;
+        }
+        
+        form {
+          padding: 15px;
+          margin-bottom: 20px;
+        }
+        
+        li {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .task-content {
+          min-width: auto;
+          width: 100%;
+          margin-bottom: 8px;
+        }
+        
+        .task-link {
+          align-self: flex-end;
+        }
+      }
+
+      /* Mobile */
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+          font-size: 15px;
+        }
+        
+        .container {
+          padding: 15px;
+          border-radius: 10px;
+        }
+        
+        h1 {
+          margin-bottom: 20px;
+          padding-bottom: 8px;
+        }
+        
+        form {
+          padding: 12px;
+          margin-bottom: 15px;
+        }
+        
+        ul {
+          margin: 20px 0;
+        }
+        
+        li {
+          padding: 12px 15px;
+          margin: 8px 0;
+        }
+        
+        .nav-links {
+          margin-top: 20px;
+          padding-top: 15px;
+          gap: 8px;
+        }
+        
+        .nav-links a {
+          min-width: 100px;
+          padding: 10px 15px;
+        }
+      }
+
+      /* Mobile Small */
+      @media (max-width: 360px) {
+        body {
+          padding: 8px;
+          font-size: 14px;
+        }
+        
+        .container {
+          padding: 12px;
+        }
+        
+        form {
+          padding: 10px;
+        }
+        
+        li {
+          padding: 10px 12px;
+        }
+        
+        .nav-links {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .nav-links a {
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Tarefas de Hoje</h1>
+
+      <form method="POST" action="/add">
+        <input
+          type="text"
+          name="titulo"
+          placeholder="Adicionar tarefa"
+          required
+        />
+        <button type="submit">Adicionar</button>
+      </form>
+
+      <ul>
+        {% for tarefa in tarefas %}
+        <li class="{% if tarefa.concluida %}completed{% endif %}">
+          <div class="task-content">
+            {% if tarefa.concluida %} 
+              <span>✔ {{ tarefa.titulo }}</span> 
+            {% else %} 
+              {{ tarefa.titulo }}
+            {% endif %}
+          </div>
+          {% if not tarefa.concluida %}
+            <a href="/done/{{ loop.index0 }}" class="task-link">Concluir</a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+
+      <div class="nav-links">
+        <a href="/fechar">Fechar o dia</a>
+        <a href="/historico">Histórico</a>
+        <a href="/logout">Sair</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      :root {
+        --primary-dark: #000000;
+        --secondary-dark: #433455;
+        --accent-purple: #8b5580;
+        --accent-blue: #416aa3;
+        --accent-green: #6eaa78;
+        --accent-teal: #68aca9;
+        --neutral-gray: #6f6776;
+        --neutral-beige: #c5ccb8;
+        --accent-burgundy: #9a4f50;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--primary-dark) 100%);
+        color: var(--neutral-beige);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        font-size: 16px;
+      }
+      
+      .login-container {
+        background: rgba(67, 52, 85, 0.95);
+        border-radius: 15px;
+        padding: clamp(25px, 6vw, 40px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        border: 1px solid var(--accent-purple);
+        width: 100%;
+        max-width: min(400px, 90vw);
+        text-align: center;
+      }
+      
+      h2 {
+        color: var(--accent-teal);
+        margin-bottom: clamp(20px, 5vw, 30px);
+        font-size: clamp(1.6em, 5vw, 2em);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        word-wrap: break-word;
+      }
+      
+      form {
+        margin-bottom: 20px;
+      }
+      
+      input[type="password"] {
+        width: 100%;
+        padding: clamp(12px, 3vw, 15px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        background: rgba(197, 204, 184, 0.1);
+        border: 2px solid var(--neutral-gray);
+        border-radius: 8px;
+        color: var(--neutral-beige);
+        font-size: clamp(14px, 4vw, 16px);
+        transition: all 0.3s ease;
+      }
+      
+      input[type="password"]:focus {
+        outline: none;
+        border-color: var(--accent-teal);
+        background: rgba(197, 204, 184, 0.15);
+        box-shadow: 0 0 10px rgba(104, 172, 169, 0.3);
+      }
+      
+      input::placeholder {
+        color: var(--neutral-gray-light);
+        font-size: clamp(14px, 4vw, 16px);
+      }
+      
+      button {
+        background: linear-gradient(135deg, var(--accent-teal) 0%, #387080 100%);
+        color: white;
+        border: none;
+        padding: clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px);
+        border-radius: 8px;
+        font-size: clamp(14px, 4vw, 16px);
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        width: 100%;
+      }
+      
+      button:hover {
+        background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-teal) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(110, 170, 120, 0.4);
+      }
+      
+      .error {
+        color: var(--accent-burgundy);
+        background: rgba(154, 79, 80, 0.2);
+        padding: clamp(12px, 3vw, 15px);
+        border-radius: 8px;
+        border-left: 4px solid var(--accent-burgundy);
+        margin: clamp(15px, 4vw, 20px) 0;
+        font-weight: bold;
+        animation: shake 0.5s ease-in-out;
+        font-size: clamp(13px, 3.5vw, 15px);
+      }
+      
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .login-container {
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      /* Mobile */
+      @media (max-width: 480px) {
+        body {
+          padding: 15px;
+          font-size: 15px;
+        }
+        
+        .login-container {
+          padding: 20px;
+          border-radius: 12px;
+        }
+        
+        h2 {
+          margin-bottom: 25px;
+        }
+      }
+
+      /* Mobile Small */
+      @media (max-width: 360px) {
+        body {
+          padding: 10px;
+          font-size: 14px;
+        }
+        
+        .login-container {
+          padding: 15px;
+          border-radius: 10px;
+        }
+        
+        h2 {
+          margin-bottom: 20px;
+          font-size: 1.4em;
+        }
+        
+        .error {
+          padding: 10px;
+          margin: 15px 0;
+        }
+      }
+
+      /* Orientação paisagem em mobile */
+      @media (max-height: 500px) and (orientation: landscape) {
+        body {
+          padding: 10px;
+          align-items: flex-start;
+        }
+        
+        .login-container {
+          margin-top: 20px;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Entrar no Sistema</h2>
+
+      <form method="POST">
+        <input type="password" name="senha" placeholder="Senha" required />
+        <button type="submit">Entrar</button>
+      </form>
+
+      {% if error %}
+      <div class="error">Senha incorreta</div>
+      {% endif %}
+    </div>
+  </body>
+</html>
